@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "watch": "vitest"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@vitest/coverage-v8": "^1.6.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.1.0",
@@ -22,7 +26,8 @@
     "prettier-plugin-css-order": "^2.0.1",
     "stylelint": "^16.2.1",
     "stylelint-config-standard": "^36.0.0",
-    "stylelint-prettier": "^5.0.0"
+    "stylelint-prettier": "^5.0.0",
+    "vitest": "^1.6.0"
   },
   "dependencies": {
     "stylelint-selector-bem-pattern": "^4.0.0"

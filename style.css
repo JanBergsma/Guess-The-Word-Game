@@ -1,10 +1,5 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
@@ -21,119 +16,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("img/bg-illustration.svg");
-  background-position: right;
-  background-size: contain;
+  background-image: url("img/bg-guess-the-word.png");
+  background-size: cover;
   background-repeat: no-repeat;
-  background-color: #111729;
+  background-color: #7429c6;
   font-family: Outfit, sans-serif;
   font-optical-sizing: auto;
-}
-
-.btn-bar {
-  display: flex;
-  gap: 1.6rem;
-  padding-top: 2rem;
-}
-
-.btn {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  border: none;
-  border-radius: 10px;
-  background-color: #3662e3;
-  padding-inline: 2rem;
-  height: 3rem;
-  color: #f2f5f9;
-  text-decoration: none;
-}
-
-.btn:hover {
-  filter: brightness(1.1);
-}
-
-.btn:active {
-  transform: translateY(1px);
-}
-
-.btn-icon {
-  height: 2rem;
-}
-
-form {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 2px solid #3662e3;
-  border-radius: 10px;
-  background-color: #080a12;
-  padding: 0.1rem 0.3rem;
-  width: 80%;
-  min-width: 20rem;
-  max-width: 36rem;
-}
-
-form:focus-within {
-  border-color: #5179f1;
-}
-
-img {
-  width: 50%;
-  max-width: 240px;
-}
-
-input {
-  border: none;
-  border-radius: 10px;
-  background-color: #080a12;
-  padding-inline-start: 1rem;
-  width: 70%;
-  height: 4rem;
-  color: #f2f5f9;
-}
-
-input:focus {
-  outline: none;
-}
-
-input:hover {
-  background-color: #111423;
-}
-
-input::placeholder {
-  color: #364153;
-}
-
-.logo {
-  position: absolute;
-  top: 5dvh;
-  left: 5dvw;
-  width: 10rem;
-}
-
-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  padding: 2rem 1rem;
-  width: 100%;
-}
-
-#qrcode {
-  border-radius: 14px;
-  background-color: #fff;
-  padding: 0.2rem;
-  width: 240px;
-}
-
-.bgn-circle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  background-color: #4e80ee33;
-  width: 320px;
-  height: 320px;
 }

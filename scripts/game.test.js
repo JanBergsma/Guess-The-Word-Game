@@ -7,17 +7,55 @@ describe("Test game", () => {
   });
 
   test("Word should be defined and should be an Array", () => {
-    expect(new Game().words).toBeDefined();
-    expect(new Game().words).toBeInstanceOf(Array);
+    const game = new Game();
+    expect(game.words).toBeDefined();
+    expect(game.words).toBeInstanceOf(Array);
+    expect(game.word).toBeTypeOf("string");
+    expect(game.scrambledWord).toBeTypeOf("string");
+    expect(game.scrambledWord.length).toBe(game.word.length);
+    expect(game.tries).toBe(0);
+    expect(game.mistakes).toBeInstanceOf(Array);
   });
 
-  // - Users can see a random scrambled word when the page is first loaded or after users click the random button.
-  // - Users can enter one letter at a time. After each attempt, the input should automatically focus on the next input if it exists.
-  // - Users can see the number of wrong answers (tries) and which answers are wrong (mistakes).
-  // - Users can regenerate a new scrambled word by selecting the random button.
-  // - Users can reset all inputs, mistakes, and tries by selecting the reset button.
-  // - When the number of tries or mistakes reaches 6, the game should be reset.
-  // - When the user completes the game, it should show a '🎉 Success' alert.
-  // - The page should be responsive on different screen sizes.
-  // - Deploy the solution and submit Repository URL and Demo URL.
+  test("Pick random word", () => {
+    const game = new Game();
+    expect(game.getRandomWord(() => 0)).toBe(game.words[0]);
+    expect(game.getRandomWord(() => 1)).toBe(game.words[game.words.length - 1]);
+  });
+
+  test("Random scrambled word", () => {
+    const game = new Game();
+    const randomWord = game.getRandomWord();
+    expect(randomWord.split("").sort()).toStrictEqual(
+      game.scrambleWord(randomWord).split("").sort(),
+    );
+  });
+
+  test("Guess one letter and should update the tries and mistakes", () => {
+    const game = new Game();
+    game.word = "barry";
+    expect(game.guessLetter(0, "a")).toBe(false);
+    expect(game.tries).toBe(1);
+    expect(game.mistakes).toContain("a");
+
+    expect(game.guessLetter(game.word.length - 1, "y")).toBe(true);
+    expect(game.tries).toBe(1);
+    expect(game.mistakes).not.toContain("y");
+  });
+
+  test("Reset the game should give a new scrambled word, set tries to 0, and empty mistakes", () => {
+    const game = new Game();
+    const firstWord = "barry";
+    game.word = firstWord;
+
+    expect(game.guessLetter(0, "a")).toBe(false);
+    expect(game.guessLetter(0, "y")).toBe(false);
+    expect(game.guessLetter(0, "r")).toBe(false);
+
+    game.reset();
+
+    expect(game.word).not.toBe(firstWord);
+    expect(game.tries).toBe(0);
+    expect(game.mistakes).toStrictEqual([]);
+  });
 });

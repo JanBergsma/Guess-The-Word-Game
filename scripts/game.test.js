@@ -58,4 +58,20 @@ describe("Test game", () => {
     expect(game.tries).toBe(0);
     expect(game.mistakes).toStrictEqual([]);
   });
+
+  test("Request new random word", () => {
+    const game = new Game();
+    const firstWord = "barry";
+    game.word = firstWord;
+
+    expect(game.guessLetter(0, "a")).toBe(false);
+    expect(game.guessLetter(0, "y")).toBe(false);
+    expect(game.guessLetter(0, "r")).toBe(false);
+
+    game.newRandomWord();
+
+    expect(game.word).not.toBe(firstWord);
+    expect(game.tries).toBe(3);
+    expect(game.mistakes).toStrictEqual(["a", "y", "r"]);
+  });
 });

@@ -24,15 +24,20 @@ export default class Game {
     return false;
   }
 
-  reset() {
+  newRandomWord() {
     this.word = this.getRandomWord();
     this.scrambledWord = this.scrambleWord(this.word);
+  }
+
+  reset() {
+    this.newRandomWord();
     this.tries = 0;
     this.mistakes = [];
   }
 
-  scrambleWord(word, random = null) {
-    random = random !== null ? random : Math.random;
+  scrambleWord(word) {
+    const random = Math.random;
+
     const scrambled = word.split("");
     for (let i = 0; i < scrambled.length; i++) {
       const j = this._randomInt(random, 0, scrambled.length);

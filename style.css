@@ -23,3 +23,158 @@ body {
   font-family: Outfit, sans-serif;
   font-optical-sizing: auto;
 }
+
+h1 {
+  background: linear-gradient(to right, #7429c6, #c951e7);
+  background-clip: text;
+  color: transparent;
+  font-size: 1.25rem;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 15px;
+  background: #030616;
+  padding: 1.4rem;
+  width: max-content;
+  height: max-content;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-evenly;
+  padding-block-end: 1rem;
+  width: 100%;
+}
+
+button {
+  cursor: pointer;
+  box-shadow: 0 2px #7429c6;
+  border: none;
+  border-radius: 8px;
+  background: #c951e7;
+  padding-block: 0.8rem;
+  width: 6rem;
+  color: #f2f5f9;
+  font-size: 0.875rem;
+}
+
+button:hover {
+  opacity: 0.95;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+.guessed-letters {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(6, 1fr);
+  justify-content: center;
+  gap: 0.3rem;
+  padding-block: 2rem;
+  color: #f2f5f9;
+  font-size: 1.5rem;
+}
+
+.guessed-letter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 1px #4a5567;
+  border-radius: 6px;
+  aspect-ratio: 1 / 1;
+}
+
+.guessed-letter-active {
+  cursor: text;
+  border-color: #7429c6;
+}
+
+#guessed-letter {
+  border: none;
+  background: #030616;
+  color: #f2f5f9;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+#guessed-letter:active,
+#guessed-letter:focus {
+  outline: none;
+}
+
+#guessed-letter::placeholder {
+  color: #f2f5f9;
+}
+
+#guessed-letter:placeholder-shown {
+  animation: blink 2s linear infinite;
+}
+
+.blink {
+  color: #f2f5f9;
+}
+/* stylelint-disable-next-line at-rule-empty-line-before */
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.mistakes {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.scrambled-word {
+  border-radius: 6px;
+  background: #4a5567;
+  padding: 0.6rem 3rem;
+  width: 100%;
+  color: #97a3b6;
+  font-weight: 500;
+  font-size: 2rem;
+  letter-spacing: 1rem;
+  text-align: center;
+}
+
+.tries-and-mistakes {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  color: #97a3b6;
+  font-size: 0.75rem;
+}
+
+.tries {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tries-state {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.try {
+  border-radius: 100%;
+  background: #97a3b6;
+  width: 0.3rem;
+  height: 0.3rem;
+}
+
+.try-done {
+  background: #672171;
+}

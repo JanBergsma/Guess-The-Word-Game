@@ -15,16 +15,17 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <script type="module" src="scripts/app.js"></script>
     <title>Guess The Word Game</title>
   </head>
   <body>
     <section>
       <h1>Word Scramblle</h1>
-      <div class="scrambled-word">relowf</div>
+      <div id="scrambled-word" class="scrambled-word">relowf</div>
       <div class="tries-and-mistakes">
         <div class="tries">
           Tries (4/5):
-          <div class="tries-state">
+          <div id="tries-state" class="tries-state">
             <div class="try try-done"></div>
             <div class="try try-done"></div>
             <div class="try try-done"></div>
@@ -35,16 +36,12 @@
         </div>
         <div class="mistakes">
           Mistakes:
-          <div class="mistakes-state">a,e,w,f</div>
+          <div id="mistakes" class="mistakes-state">a,e,w,f</div>
         </div>
       </div>
-      <div class="guessed-letters">
-        <span class="guessed-letter">f</span>
-        <span class="guessed-letter">l</span>
-        <span class="guessed-letter">o</span>
-        <span class="guessed-letter">w</span>
-        <span class="guessed-letter guessed-letter-active"
-          ><input
+      <div id="guessed-letters" class="guessed-letters">
+        <span class="guessed-letter guessed-letter-active">
+          <input
             type="text"
             id="guessed-letter"
             name="guessed-letter"
@@ -53,7 +50,12 @@
             maxlength="1"
             size="1"
             placeholder="_"
-        /></span>
+          />
+        </span>
+        <span class="guessed-letter"></span>
+        <span class="guessed-letter"></span>
+        <span class="guessed-letter"></span>
+        <span class="guessed-letter"></span>
         <span class="guessed-letter"></span>
       </div>
       <div class="button-container">

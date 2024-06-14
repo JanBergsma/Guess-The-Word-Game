@@ -1,4 +1,4 @@
-import words from "../data/words.json";
+import { words } from "../data/words.js";
 
 export default class Game {
   constructor() {

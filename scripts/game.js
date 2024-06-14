@@ -16,10 +16,10 @@ export default class Game {
   }
 
   guessLetter(index, letter) {
+    this.tries += 1;
     if (letter === this.word[index]) {
       return true;
     }
-    this.tries += 1;
     this.mistakes.push(letter);
     return false;
   }

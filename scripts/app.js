@@ -9,14 +9,18 @@ const triesState = document.getElementById("tries-state");
 const mistakes = document.getElementById("mistakes");
 const guessedLetters = document.getElementById("guessed-letters");
 const letterInput = document.getElementById("guessed-letter");
-
+const tries = document.getElementById("tries");
 const trieStateChildren = [...triesState.children];
 const guessedLettersChildren = [...guessedLetters.children];
 
+const dialog = document.querySelector("dialog");
+const closeButton = document.querySelector("dialog button");
+const dialogText = document.getElementById("dialog-text");
+
 const oneLetterRegex = /^[a-zA-Z]$/;
 
-update();
-console.log(game.word);
+document.addEventListener("DOMContentLoaded", update);
+
 function update() {
   scrambledWord.innerText = game.scrambledWord;
 
@@ -29,14 +33,15 @@ function update() {
   });
 
   mistakes.innerText = game.mistakes;
+  tries.innerText = `Tries (${game.tries}/ ${game.word.length})`;
+  letterInput.focus();
 }
 
 function reset() {
-  console.log("reset");
   game.reset();
   guessedLettersChildren.forEach((element) => {
     element.innerText = "";
-    element.classList.toggle("guessed-letter-active");
+    element.classList.remove("guessed-letter-active");
   });
   letterInput.value = "";
   guessedLettersChildren[0].classList.add("guessed-letter-active");
@@ -48,7 +53,7 @@ letterInput.addEventListener("input", (e) => {
   if (!oneLetterRegex.test(value)) {
     return;
   }
-  console.log("change", value);
+
   if (game.guessLetter(activeLetter, value)) {
     guessedLettersChildren[activeLetter].classList.remove(
       "guessed-letter-active",
@@ -56,20 +61,26 @@ letterInput.addEventListener("input", (e) => {
 
     if (activeLetter + 1 === game.word.length) {
       guessedLettersChildren[activeLetter].appendChild(letterInput);
-      letterInput.disabled = true;
       console.log("you won!");
-      return;
+      dialogText.innerHTML = `<h2>You won!</h2><p>Word was ${game.word} 🎉</p>`;
+      dialog.showModal();
+      reset();
+    } else {
+      guessedLettersChildren[activeLetter].innerText = value;
+      activeLetter += 1;
+      guessedLettersChildren[activeLetter].classList.add(
+        "guessed-letter-active",
+      );
+      guessedLettersChildren[activeLetter].appendChild(letterInput);
     }
-    guessedLettersChildren[activeLetter].innerText = value;
-    activeLetter += 1;
-    guessedLettersChildren[activeLetter].classList.add("guessed-letter-active");
-    letterInput.value = "";
+  } else if (game.mistakes.length === game.word.length) {
     guessedLettersChildren[activeLetter].appendChild(letterInput);
-    letterInput.focus();
-  } else if (game.tries === game.word.length) {
     console.log("you lost");
+    dialogText.innerHTML = "<h2>You lost!</h2>";
+    dialog.showModal();
     reset();
   }
+  letterInput.value = "";
   update();
 });
 
@@ -77,9 +88,17 @@ const randomButton = document.getElementById("random");
 randomButton.addEventListener("click", () => {
   game.newRandomWord();
   activeLetter = 0;
-  console.log(game.word);
   update();
 });
 
 const resetButton = document.getElementById("reset");
-resetButton.addEventListener("click", reset);
+resetButton.addEventListener("click", () => {
+  reset();
+  update();
+});
+
+closeButton.addEventListener("click", () => {
+  dialog.close();
+  activeLetter = 0;
+  letterInput.focus();
+});

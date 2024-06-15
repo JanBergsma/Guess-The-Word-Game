@@ -31,6 +31,12 @@ h1 {
   font-size: 1.25rem;
 }
 
+h2 {
+  background: linear-gradient(to right, #7429c6, #c951e7);
+  background-clip: text;
+  color: transparent;
+}
+
 section {
   display: flex;
   flex-direction: column;
@@ -58,13 +64,18 @@ button {
   border-radius: 8px;
   background: #c951e7;
   padding-block: 0.8rem;
-  width: 6rem;
+  width: 8rem;
   color: #f2f5f9;
   font-size: 0.875rem;
 }
 
 button:hover {
   opacity: 0.95;
+}
+
+button:focus {
+  outline: none;
+  border: none;
 }
 
 button:active {
@@ -135,18 +146,20 @@ button:active {
 .mistakes {
   display: flex;
   gap: 0.5rem;
+  width: 6rem;
 }
 
 .scrambled-word {
+  display: grid;
+  place-content: center;
   border-radius: 6px;
   background: #4a5567;
-  padding: 0.5rem 5rem;
-  width: 100%;
+  padding-block: 0.4rem;
+  width: 25rem;
   color: #97a3b6;
   font-weight: 500;
   font-size: 2rem;
   letter-spacing: 1rem;
-  text-align: center;
 }
 
 .tries-and-mistakes {
@@ -178,4 +191,38 @@ button:active {
 
 .try-done {
   background: #672171;
+}
+
+dialog[open] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  transform: scaleY(1);
+  opacity: 1;
+  color: #97a3b6;
+}
+
+dialog {
+  position: relative;
+  top: 40%;
+  left: 40%;
+  opacity: 0;
+  border: none;
+  border-radius: 15px;
+  background: #030616;
+  width: 24rem;
+  height: 15rem;
+}
+
+dialog p {
+  width: 100%;
+  font-size: 2rem;
+  text-align: center;
+}
+
+dialog::backdrop {
+  opacity: 0.75;
+  background: #4a5567;
 }

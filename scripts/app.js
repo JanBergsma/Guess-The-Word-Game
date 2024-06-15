@@ -13,6 +13,8 @@ const letterInput = document.getElementById("guessed-letter");
 const trieStateChildren = [...triesState.children];
 const guessedLettersChildren = [...guessedLetters.children];
 
+const oneLetterRegex = /^[a-zA-Z]$/;
+
 update();
 console.log(game.word);
 function update() {
@@ -27,35 +29,57 @@ function update() {
   });
 
   mistakes.innerText = game.mistakes;
+}
 
-  // guessedLettersChildren.forEach((element, index) => {
-  //   console.log(element);
-  // });
+function reset() {
+  console.log("reset");
+  game.reset();
+  guessedLettersChildren.forEach((element) => {
+    element.innerText = "";
+    element.classList.toggle("guessed-letter-active");
+  });
+  letterInput.value = "";
+  guessedLettersChildren[0].classList.add("guessed-letter-active");
+  guessedLettersChildren[0].appendChild(letterInput);
 }
 
 letterInput.addEventListener("input", (e) => {
   const value = e.target.value;
-  console.log("input", value);
+  if (!oneLetterRegex.test(value)) {
+    return;
+  }
+  console.log("change", value);
   if (game.guessLetter(activeLetter, value)) {
-    console.log("hoppla");
     guessedLettersChildren[activeLetter].classList.remove(
       "guessed-letter-active",
     );
-    guessedLettersChildren[activeLetter].innerText = value;
-    // guessedLettersChildren[activeLetter].removeChild(letterInput);
+
     if (activeLetter + 1 === game.word.length) {
       guessedLettersChildren[activeLetter].appendChild(letterInput);
       letterInput.disabled = true;
       console.log("you won!");
-    } else {
-      activeLetter += 1;
-      guessedLettersChildren[activeLetter].classList.add(
-        "guessed-letter-active",
-      );
-      letterInput.value = "";
-      guessedLettersChildren[activeLetter].appendChild(letterInput);
-      letterInput.focus();
+      return;
     }
+    guessedLettersChildren[activeLetter].innerText = value;
+    activeLetter += 1;
+    guessedLettersChildren[activeLetter].classList.add("guessed-letter-active");
+    letterInput.value = "";
+    guessedLettersChildren[activeLetter].appendChild(letterInput);
+    letterInput.focus();
+  } else if (game.tries === game.word.length) {
+    console.log("you lost");
+    reset();
   }
   update();
 });
+
+const randomButton = document.getElementById("random");
+randomButton.addEventListener("click", () => {
+  game.newRandomWord();
+  activeLetter = 0;
+  console.log(game.word);
+  update();
+});
+
+const resetButton = document.getElementById("reset");
+resetButton.addEventListener("click", reset);

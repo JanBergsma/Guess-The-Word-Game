@@ -7,6 +7,7 @@ export default class Game {
     this.scrambledWord = this.scrambleWord(this.word);
     this.tries = 0;
     this.mistakes = [];
+    this.activeLetter = 0;
   }
 
   getRandomWord(random = null) {
@@ -17,6 +18,7 @@ export default class Game {
 
   guessLetter(index, letter) {
     if (letter === this.word[index]) {
+      this.activeLetter += 1;
       return true;
     }
     this.tries += 1;
@@ -26,12 +28,14 @@ export default class Game {
 
   newRandomWord() {
     this.word = this.getRandomWord();
+    this.activeLetter = 0;
     this.scrambledWord = this.scrambleWord(this.word);
   }
 
   reset() {
     this.newRandomWord();
     this.tries = 0;
+    this.activeLetter = 0;
     this.mistakes = [];
   }
 

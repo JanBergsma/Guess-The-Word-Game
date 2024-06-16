@@ -2,8 +2,6 @@ import Game from "./game.js";
 
 const game = new Game();
 
-let activeLetter = 0;
-
 const scrambledWord = document.getElementById("scrambled-word");
 const triesState = document.getElementById("tries-state");
 const mistakes = document.getElementById("mistakes");
@@ -20,6 +18,36 @@ const dialogText = document.getElementById("dialog-text");
 const oneLetterRegex = /^[a-zA-Z]$/;
 
 document.addEventListener("DOMContentLoaded", update);
+
+const randomButton = document.getElementById("random");
+randomButton.addEventListener("click", () => {
+  game.newRandomWord();
+  resetGuessedLetters();
+  update();
+});
+
+const resetButton = document.getElementById("reset");
+resetButton.addEventListener("click", () => {
+  reset();
+  update();
+});
+
+closeButton.addEventListener("click", () => {
+  dialog.close();
+  letterInput.focus();
+});
+
+letterInput.addEventListener("input", processInputLetter);
+
+function resetGuessedLetters() {
+  guessedLettersChildren.forEach((element) => {
+    element.innerText = "";
+    element.classList.remove("guessed-letter-active");
+  });
+  letterInput.value = "";
+  guessedLettersChildren[0].classList.add("guessed-letter-active");
+  guessedLettersChildren[0].appendChild(letterInput);
+}
 
 function update() {
   scrambledWord.innerText = game.scrambledWord;
@@ -39,66 +67,38 @@ function update() {
 
 function reset() {
   game.reset();
-  guessedLettersChildren.forEach((element) => {
-    element.innerText = "";
-    element.classList.remove("guessed-letter-active");
-  });
-  letterInput.value = "";
-  guessedLettersChildren[0].classList.add("guessed-letter-active");
-  guessedLettersChildren[0].appendChild(letterInput);
+  resetGuessedLetters();
 }
 
-letterInput.addEventListener("input", (e) => {
+function processInputLetter(e) {
   const value = e.target.value;
   if (!oneLetterRegex.test(value)) {
     return;
   }
 
-  if (game.guessLetter(activeLetter, value)) {
-    guessedLettersChildren[activeLetter].classList.remove(
+  if (game.guessLetter(game.activeLetter, value)) {
+    guessedLettersChildren[game.activeLetter - 1].classList.remove(
       "guessed-letter-active",
     );
 
-    if (activeLetter + 1 === game.word.length) {
-      guessedLettersChildren[activeLetter].appendChild(letterInput);
-      console.log("you won!");
+    if (game.activeLetter === game.word.length) {
+      guessedLettersChildren[game.activeLetter - 1].appendChild(letterInput);
       dialogText.innerHTML = `<h2>You won!</h2><p>Word was ${game.word} 🎉</p>`;
       dialog.showModal();
       reset();
     } else {
-      guessedLettersChildren[activeLetter].innerText = value;
-      activeLetter += 1;
-      guessedLettersChildren[activeLetter].classList.add(
+      guessedLettersChildren[game.activeLetter - 1].innerText = value;
+      guessedLettersChildren[game.activeLetter].classList.add(
         "guessed-letter-active",
       );
-      guessedLettersChildren[activeLetter].appendChild(letterInput);
+      guessedLettersChildren[game.activeLetter].appendChild(letterInput);
     }
   } else if (game.mistakes.length === game.word.length) {
-    guessedLettersChildren[activeLetter].appendChild(letterInput);
-    console.log("you lost");
+    guessedLettersChildren[game.activeLetter].appendChild(letterInput);
     dialogText.innerHTML = "<h2>You lost!</h2>";
     dialog.showModal();
     reset();
   }
   letterInput.value = "";
   update();
-});
-
-const randomButton = document.getElementById("random");
-randomButton.addEventListener("click", () => {
-  game.newRandomWord();
-  activeLetter = 0;
-  update();
-});
-
-const resetButton = document.getElementById("reset");
-resetButton.addEventListener("click", () => {
-  reset();
-  update();
-});
-
-closeButton.addEventListener("click", () => {
-  dialog.close();
-  activeLetter = 0;
-  letterInput.focus();
-});
+}
